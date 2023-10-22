@@ -6,12 +6,17 @@ import mvc.domain.GameJudge;
 
 public class BaseBallService {
 
-    public Ball createAnswerBall() {
-        AnswerBallGenerator generator = new AnswerBallGenerator(new DefaultRandomService());
-        return generator.generate();
+    private final AnswerBallGenerator answerBallGenerator;
+
+    public BaseBallService(AnswerBallGenerator answerBallGenerator) {
+        this.answerBallGenerator = answerBallGenerator;
     }
 
-    public String makeGameResult(Ball answerBall, Ball tryBall) {
+    public Ball createAnswerBall() {
+        return answerBallGenerator.generate();
+    }
+
+    public String createGameResultWith(Ball answerBall, Ball tryBall) {
         GameJudge gameJudge = new GameJudge(answerBall);
         return gameJudge.judge(tryBall);
     }
